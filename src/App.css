@@ -1,0 +1,332 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('/public/background.jpg');
+  background-size: cover;
+  background-position: center;
+  font-family: "dm-sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.start-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
+  text-align: center;
+  cursor: pointer;
+}
+
+.start-image {
+  width: 50%; /* Ajusta el tamaño de la imagen según tus necesidades */
+  height: auto; 
+}
+
+.start-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  font-size: 3rem; /* Ajusta este tamaño según lo que necesites */
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+
+.quiz-image {
+  max-width: 200px; /* Ajusta según el tamaño deseado */
+  height: auto;
+}
+
+.quiz-container {   
+  width: 600px;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.border-top, .border-right, .border-bottom, .border-left {
+  position: absolute;  
+  background-color: white;
+}
+
+.border-top {
+  top: 0; 
+  left: 0; 
+  height: 2px; 
+  width: 0; 
+  animation: drawHorizontal 0.5s linear forwards;
+}
+
+.border-right {
+  top: 0; 
+  right: 0; 
+  width: 2px; 
+  height: 0; 
+  animation: drawVertical 0.5s linear forwards;
+  animation-delay: 0.5s;
+}
+
+.border-bottom {
+  bottom: 0; 
+  right: 0; 
+  height: 2px; 
+  width: 0; 
+  animation: drawHorizontal 0.5s linear forwards;
+  animation-delay: 1s;
+
+}
+
+.border-left {
+  bottom: 0; 
+  left: 0; 
+  width: 2px; 
+  height: 0; 
+  animation: drawVertical 0.5s linear forwards;
+  animation-delay: 1.5s;
+}
+
+@keyframes drawHorizontal {
+  to { width: 100%; }
+}
+
+@keyframes drawVertical {
+  to { height: 100%; }
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  transform: scale(0);
+  animation: fillBackground 0.5s ease-out 2s forwards, roundCorners 0.5s ease-out 2.5s forwards;
+}
+
+@keyframes fillBackground {
+  to { transform: scale(1); }
+}
+
+@keyframes roundCorners {
+  to { border-radius: 20px; }
+}
+
+.quiz-content {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 3s forwards;
+  display: flex;
+  height: 100%;
+  color: #0000FF;
+}
+
+.question-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 20px;
+}
+
+.answers-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.answer-option {
+  margin-bottom: 10px;
+}
+
+.answer-option input[type="checkbox"] {
+  display: none;
+}
+
+.answer-option label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.answer-option label::before {
+  content: '';
+  width: 20px;
+  height: 20px;  
+  margin-right: 10px;
+  background-color: #ADD8E6; /* Fondo azul claro */
+  background-size: cover;
+  border-radius: 3px 3px 3px 0;
+}
+
+.answer-option input[type="checkbox"]:checked + label::before {
+  background-image: url('/public/check.jfif');
+  background-color: #ADD8E6;
+}
+
+.answer-option.incorrect input[type="checkbox"]:checked + label::before {
+  background-image: url('/public/unchek.png');
+}
+
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.question-info {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #0000FF; /* Puedes cambiar el color según prefieras */
+}
+
+.blue-corner {
+  position: absolute;
+  bottom: 10px; /* Ajusta según sea necesario */
+  left: 10px;   /* Ajusta según sea necesario */
+  width: 50px;  /* Tamaño inicial del cuadrado */
+  height: 50px; /* Tamaño inicial del cuadrado */
+  background-color: #0000FF; /* Color inicial (se sobrescribirá en línea) */
+  border-radius: 4px; /* Opcional: redondear los bordes */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  transition: width 0.5s ease, height 0.5s ease; /* Animación de cambio de tamaño */
+  z-index: 10;
+  overflow: hidden;
+}
+
+.feedback-visible {
+  width: calc(100% - 20px); /* Tamaño casi igual al del contenedor, menos algún margen */
+  height: calc(100% - 20px); /* Tamaño casi igual al del contenedor, menos algún margen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px; /* Ajusta el tamaño del texto según sea necesario */
+  font-weight: bold;
+}
+
+.quiz-wrapper {
+  position: relative; /* Necesario para que los elementos absolutos dentro de este contenedor se posicionen con respecto a él */
+}
+
+.mani-image {
+  position: absolute;
+  top: 50px; /* Ajusta según sea necesario */
+  right: -120px; /* Ajusta según sea necesario */
+  max-width: 200px;
+  height: auto;
+  z-index: 20; /* Asegura que la imagen esté por encima del cuestionario */
+}
+
+.congrats-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 30;
+  /* Sin fondo negro en el overlay */
+}
+
+.congrats-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 900px; /* Ajusta el tamaño según sea necesario */
+  max-height: 80vh; /* Ajusta la altura máxima según sea necesario */
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo negro semi-transparente para el contenedor de la imagen */
+  border-radius: 20px; /* Opcional: agrega bordes redondeados */
+}
+
+.congrats-image {
+  max-width: 100%; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  opacity: 0.7; /* Imagen sin opacidad para mantener el fondo negro visible */
+  animation: scaleUp 1s ease-out forwards; /* Imagen aparece primero */
+}
+
+.congrats-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  top: 20%; /* Ajusta para mantener el texto dentro de la imagen */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: fadeInText 1s ease-out 1s forwards, moveTextUp 1s ease-out 2s forwards; /* Aparece después de la imagen y luego se mueve hacia arriba */
+  z-index: 10;
+  width: 100%;
+  text-align: center;
+}
+
+.specialist-text {
+  font-size: 2.5rem;
+  color: white;
+  margin-top: 20px; /* Ajusta el espacio debajo del texto */
+  opacity: 0;
+  animation: fadeInSpecialistText 1s ease-out 3s forwards; /* Aparece después del texto principal */
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute; /* Posiciona el texto sobre la imagen */
+  top: 50%; /* Ajusta la posición según sea necesario */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra el texto */
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes moveTextUp {
+  from {
+    top: 20%; /* Empieza en el lugar inicial */
+    transform: translate(-50%, -50%);
+  }
+  to {
+    top: 10%; /* Ajusta según sea necesario */
+    transform: translate(-50%, -10%);
+  }
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInSpecialistText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
