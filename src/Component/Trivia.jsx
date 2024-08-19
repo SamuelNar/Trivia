@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import finImagen from "./assets/Fin.jpg";
-import inicioImagen from "./assets/Inicio.jpg";
-import maniImagen from "./assets/Personaje.png";
+import finImagen from "/assets/Fin.jpg";
+import inicioImagen from "/assets/Inicio.jpg";
+import maniImagen from "/assets/Personaje.png";
 const Trivia = () => {
   const questions = [
     {
