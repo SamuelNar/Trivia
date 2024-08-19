@@ -45,8 +45,10 @@ function App() {
       const isAnswerCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
       setIsCorrect(isAnswerCorrect);
 
-      const feedbackMessage = isAnswerCorrect ? "Correcto" : "Incorrecto";
-      const feedbackColor = isAnswerCorrect ? "#00FF00" : "#FF0000";
+      const feedbackMessage = isAnswerCorrect
+      ? "¡Correcto! Seguimos en carrera."
+      : "Upps, creo que va a tener que conocer más sobre el mundo del maní! Te esperamos en nuestro staff.";
+    const feedbackColor = isAnswerCorrect ? "#00FF00" : "#FF0000";
 
       setFeedback({ message: feedbackMessage, color: feedbackColor });
 

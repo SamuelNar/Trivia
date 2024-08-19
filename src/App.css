@@ -23,6 +23,7 @@
 .start-image {
   width: 50%; /* Ajusta el tamaño de la imagen según tus necesidades */
   height: auto; 
+  border-radius: 20px;
 }
 
 .start-text {
@@ -190,18 +191,16 @@
 
 .blue-corner {
   position: absolute;
-  bottom: 10px; /* Ajusta según sea necesario */
-  left: 10px;   /* Ajusta según sea necesario */
-  width: 50px;  /* Tamaño inicial del cuadrado */
-  height: 50px; /* Tamaño inicial del cuadrado */
-  background-color: #0000FF; /* Color inicial (se sobrescribirá en línea) */
-  border-radius: 4px; /* Opcional: redondear los bordes */
+  bottom: 10px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: #0000FF;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-weight: bold;
-  transition: width 0.5s ease, height 0.5s ease; /* Animación de cambio de tamaño */
   z-index: 10;
   overflow: hidden;
 }
