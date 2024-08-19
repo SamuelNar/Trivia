@@ -1,56 +1,57 @@
-import React, { useState, useEffect } from "react";
-import FotoInicio from "./assets/Inicio.jpg";
-import maniImage from "./assets/Personaje.png";
-import FotoFin from "./assets/Fin.jpg"
-import "./App.css";
+import { useState, useEffect } from "react";
 
-const questions = [
-  {
-    question: "¿Cuál es el principal país productor de maní en el mundo?",
-    choices: ["China", "Argentina", "Estados Unidos"],
-    correctAnswer: 0,
-  },
-  {
-    question: "¿Qué nutriente es especialmente abundante en el maní?",
-    choices: ["Proteína", "Carbohidratos", "Calcio"],
-    correctAnswer: 0,
-  },
-  {
-    question: "¿En qué región de Argentina es más común el cultivo de maní?",
-    choices: ["Patagonia", "Pampa Húmeda", "Córdoba"],
-    correctAnswer: 2,
-  },
-  {
-    question: "¿Qué vitamina es abundante en el maní?",
-    choices: ["Vitamina C", "Vitamina B3", "Vitamina D"],
-    correctAnswer: 1,
-  },
-  {
-    question:
-      "¿Qué ciudad de la provincia de Córdoba es conocida como 'La Capital Nacional del Maní'?",
-    choices: ["General Deheza", "Hernando", "General Cabrera"],
-    correctAnswer: 1,
-  },
-];
-function App() {
+const Trivia = () => {
+  const questions = [
+    {
+      question: "¿Cuál es el principal país productor de maní en el mundo?",
+      choices: ["China", "Argentina", "Estados Unidos"],
+      correctAnswer: 0,
+    },
+    {
+      question: "¿Qué nutriente es especialmente abundante en el maní?",
+      choices: ["Proteína", "Carbohidratos", "Calcio"],
+      correctAnswer: 0,
+    },
+    {
+      question: "¿En qué región de Argentina es más común el cultivo de maní?",
+      choices: ["Patagonia", "Pampa Húmeda", "Córdoba"],
+      correctAnswer: 2,
+    },
+    {
+      question: "¿Qué vitamina es abundante en el maní?",
+      choices: ["Vitamina C", "Vitamina B3", "Vitamina D"],
+      correctAnswer: 1,
+    },
+    {
+      question:
+        "¿Qué ciudad de la provincia de Córdoba es conocida como 'La Capital Nacional del Maní'?",
+      choices: ["General Deheza", "Hernando", "General Cabrera"],
+      correctAnswer: 1,
+    },
+  ];
+
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [showCongratulations, setShowCongratulations] = useState(false);
+  const [isGameStart, setIsGameStart] = useState(true);
 
   useEffect(() => {
     if (selectedAnswer !== null) {
-      const isAnswerCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
+      const isAnswerCorrect =
+        selectedAnswer === questions[currentQuestion].correctAnswer;
       setIsCorrect(isAnswerCorrect);
 
       const feedbackMessage = isAnswerCorrect
-      ? "¡Correcto! Seguimos en carrera."
-      : "Upps, creo que va a tener que conocer más sobre el mundo del maní! Te esperamos en nuestro staff.";
-    const feedbackColor = isAnswerCorrect ? "#00FF00" : "#FF0000";
+        ? "¡Correcto! Seguimos en carrera."
+        : "Upps, creo que va a tener que conocer más sobre el mundo del maní! Te esperamos en nuestro staff.";
+      const feedbackColor = isAnswerCorrect ? "#00FF00" : "#FF0000";
 
       setFeedback({ message: feedbackMessage, color: feedbackColor });
+
+      const feedbackDuration = isAnswerCorrect ? 3000 : 3000; // Ajusta el tiempo según sea necesario
 
       const timer = setTimeout(() => {
         if (isAnswerCorrect) {
@@ -59,28 +60,48 @@ function App() {
             setSelectedAnswer(null);
             setIsCorrect(null);
             setFeedback(null);
+            setIsGameStart(false);
           } else {
-            setShowCongratulations(true); // Mostrar la imagen de felicitaciones
+            setShowCongratulations(true);
             setShowQuiz(false);
           }
         } else {
-          setTimeout(() => {
-            setFeedback(null);
-            setShowQuiz(false); // Volver a la pantalla de inicio
-          }, 1000);
+          setFeedback(null);
+          setShowQuiz(false); // Volver a la pantalla de inicio
         }
-      }, 1000);
+      }, feedbackDuration);
+
+      if (showCongratulations) {
+        // Reiniciar automáticamente después de 10 segundos
+        const autoRestartTimer = setTimeout(() => {
+          handleRestartQuiz();
+        }, 10000);
+  
+        return () => clearTimeout(autoRestartTimer);
+      }
 
       return () => clearTimeout(timer);
     }
-  }, [selectedAnswer, currentQuestion]);
+  }, [selectedAnswer, currentQuestion, showCongratulations]);
 
   const handleStartQuiz = () => {
     setShowQuiz(true);
     setCurrentQuestion(0);
     setSelectedAnswer(null);
     setIsCorrect(null);
-    setShowCongratulations(false); // Asegúrate de que el estado esté correcto al iniciar el cuestionario
+    setFeedback(null); // Asegúrate de que el feedback se reinicie
+    setShowCongratulations(false);
+    setIsGameStart(true);
+  };
+
+  const handleRestartQuiz = () => {
+    setShowQuiz(false);
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setIsCorrect(null);
+    setFeedback(null); // Asegúrate de que el feedback se reinicie
+    setShowCongratulations(false);
+    setIsGameStart(true);
   };
 
   const handleAnswerSelect = (index) => {
@@ -88,16 +109,16 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="trivia-container">
       {!showCongratulations && !showQuiz ? (
         <div className="start-container" onClick={handleStartQuiz}>
           <img
-            src={FotoInicio}
+            src="/assets/Inicio.jpg"
             alt="Desafío para MANÍaticos"
             className="start-image"
           />
           <p className="start-text">
-            Desafío para <br/>
+            Desafío para <br />
             MANÍaticos
           </p>
         </div>
@@ -106,23 +127,41 @@ function App() {
           {showCongratulations ? (
             <div className="congrats-overlay">
               <div className="congrats-content">
-                <img src={FotoFin} alt="Felicitaciones" className="congrats-image" />
+                <img
+                  src="/assets/Fin.jpg"
+                  alt="Felicitaciones"
+                  className="congrats-image"
+                />
                 <div className="congrats-text">¡Felicitaciones!</div>
-                <div className="specialist-text">Sos un especialista en maní como nosotros, y eso tiene un premio</div>
-              </div>
+                <div className="specialist-text">
+                  Sos un especialista en maní como nosotros, y eso tiene un
+                  premio
+                </div>                
+              </div>              
             </div>
+            
           ) : (
-            <div className={`quiz-wrapper ${showQuiz ? 'animate-quiz' : ''}`}>
+            <div className={`quiz-wrapper ${showQuiz ? "animate-quiz" : ""}`}>
               <div className="quiz-container">
                 <div className="border-top"></div>
                 <div className="border-right"></div>
                 <div className="border-bottom"></div>
                 <div className="border-left"></div>
                 <div
-                  className={`blue-corner ${feedback ? "feedback-visible" : ""}`}
+                  className={`blue-corner ${
+                    feedback ? "feedback-visible" : ""
+                  } ${isGameStart ? "game-start" : ""}`}
                   style={{ backgroundColor: feedback?.color }}
                 >
-                  {feedback && <span>{feedback.message}</span>}
+                  {feedback && (
+                    <span
+                      className={`feedback-text ${
+                        isCorrect ? "correct" : "incorrect"
+                      }`}
+                    >
+                      {feedback.message}
+                    </span>
+                  )}
                 </div>
                 <div className="fill"></div>
                 <div className="quiz-content">
@@ -157,13 +196,17 @@ function App() {
                   </div>
                 </div>
               </div>
-              <img src={maniImage} alt="Maní" className="mani-image" />
+              <img
+                src="/assets/Personaje.png"
+                alt="Maní"
+                className="mani-image"
+              />
             </div>
           )}
         </>
       )}
     </div>
   );
-}
+};
 
-export default App;
+export default Trivia;
