@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-
+import finImagen from "./assets/Fin.jpg";
+import inicioImagen from "./assets/Inicio.jpg";
+import maniImagen from "./assets/Personaje.png";
 const Trivia = () => {
   const questions = [
     {
@@ -113,7 +115,7 @@ const Trivia = () => {
       {!showCongratulations && !showQuiz ? (
         <div className="start-container" onClick={handleStartQuiz}>
           <img
-            src="/assets/Inicio.jpg"
+            src={inicioImagen}
             alt="Desafío para MANÍaticos"
             className="start-image"
           />
@@ -128,7 +130,7 @@ const Trivia = () => {
             <div className="congrats-overlay">
               <div className="congrats-content">
                 <img
-                  src="/assets/Fin.jpg"
+                  src={finImagen}
                   alt="Felicitaciones"
                   className="congrats-image"
                 />
@@ -197,7 +199,7 @@ const Trivia = () => {
                 </div>
               </div>
               <img
-                src="/assets/Personaje.png"
+                src={maniImagen}
                 alt="Maní"
                 className="mani-image"
               />
