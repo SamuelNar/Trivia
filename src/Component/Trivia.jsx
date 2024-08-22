@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import finImagen from "/assets/Fin.jpg";
-import inicioImagen from "/assets/Inicio.jpg";
-import maniImagen from "/assets/Personaje.png";
+import finImagen from "/assets/Fin.webp";
+import maniImagen from "/assets/Personaje.webp";
+import imgCorner from "/assets/Formaazul.png"
+import Inicio from "/assets/Manicompletoconbordeblanco.png"
 const Trivia = () => {
   const questions = [
     {
@@ -49,9 +50,8 @@ const Trivia = () => {
       const feedbackMessage = isAnswerCorrect
         ? "¡Correcto! Seguimos en carrera."
         : "Upps, creo que va a tener que conocer más sobre el mundo del maní! Te esperamos en nuestro staff.";
-      const feedbackColor = isAnswerCorrect ? "#00FF00" : "#FF0000";
 
-      setFeedback({ message: feedbackMessage, color: feedbackColor });
+      setFeedback({ message: feedbackMessage});
 
       const feedbackDuration = isAnswerCorrect ? 3000 : 3000; // Ajusta el tiempo según sea necesario
 
@@ -113,17 +113,15 @@ const Trivia = () => {
   return (
     <div className="trivia-container">
       {!showCongratulations && !showQuiz ? (
-        <div className="start-container" onClick={handleStartQuiz}>
-          <img
-            src={inicioImagen}
-            alt="Desafío para MANÍaticos"
-            className="start-image"
-          />
-          <p className="start-text">
-            Desafío para <br />
-            MANÍaticos
-          </p>
-        </div>
+      <div className="start-container" onClick={handleStartQuiz}>
+      <div className="start-image-wrapper">
+        <img
+          src={Inicio}
+          alt="Desafío para MANÍaticos"
+          className="start-image"
+        />        
+      </div>      
+    </div>
       ) : (
         <>
           {showCongratulations ? (
@@ -149,12 +147,12 @@ const Trivia = () => {
                 <div className="border-right"></div>
                 <div className="border-bottom"></div>
                 <div className="border-left"></div>
-                <div
+                <img
+                  src={imgCorner}
                   className={`blue-corner ${
                     feedback ? "feedback-visible" : ""
-                  } ${isGameStart ? "game-start" : ""}`}
-                  style={{ backgroundColor: feedback?.color }}
-                >
+                  } ${isGameStart ? "game-start" : ""}`}                  
+                />
                   {feedback && (
                     <span
                       className={`feedback-text ${
@@ -163,17 +161,16 @@ const Trivia = () => {
                     >
                       {feedback.message}
                     </span>
-                  )}
-                </div>
+                  )}            
                 <div className="fill"></div>
                 <div className="quiz-content">
                   <div className="question-info">
                     <span>
-                      Pregunta {currentQuestion + 1} de {questions.length}
+                      {currentQuestion + 1}.
                     </span>
                   </div>
                   <div className="question-section">
-                    <h2>{questions[currentQuestion].question}</h2>
+                    <p>{questions[currentQuestion].question}</p>
                   </div>
                   <div className="answers-section">
                     {questions[currentQuestion].choices.map((choice, index) => (
