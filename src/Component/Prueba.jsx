@@ -1,4 +1,5 @@
 
+import '../prueba.css'
 import { useState, useEffect } from 'react';
 const Prueba = () => {
     const [isExpanded, setIsExpanded] = useState(false);

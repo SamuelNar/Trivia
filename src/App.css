@@ -1,4 +1,4 @@
-.App{
+/*.App{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -529,7 +529,7 @@
     opacity: 1;
   }
 }
-
+*/
 @media screen and (max-width: 1024px) {
   .App {
     height: auto; /* Permite que el contenido se adapte a la altura del dispositivo */

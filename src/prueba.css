@@ -26,7 +26,7 @@ body {
     border-radius: 600px 400px 600px 400px;  /* Radio de los bordes */
     background-color: transparent;  /* Color de fondo transparente */
     position: absolute; /* Permite que el div interior crezca fuera del div exterior */
-    animation: expand 5s forwards, paint 5s 5s forwards; /* Aplica las animaciones */
+    animation: expand 5s forwards, paint 3s 5s forwards; /* Aplica las animaciones */
     z-index: 1; /* Asegura que el div interior esté sobre el div exterior */
   }
   
@@ -42,32 +42,20 @@ body {
   }
 
 
-
   @keyframes paint {
     0% {
-        background: linear-gradient(to right, 
-            green -50%, green 0%, 
-            transparent 0%, transparent 100%, 
-            blue 100%, blue 150%);
-    }
-    100% {
-        background: linear-gradient(to right, 
-            green 0%, green 50%, 
-            transparent 50%, transparent 50%, 
-            blue 50%, blue 100%);
-    }
-}
-
-  /*
-  @keyframes paint {
-    0% {
-      background: transparent;
-    }
-    100% {
-      background: linear-gradient(to right, green 25%, transparent 25%, transparent 75%),
-                  linear-gradient(to left, blue 25%, transparent 25%, transparent 75%);
+      background: linear-gradient(to right, white 50%, transparent 50%, transparent 75%),
+                  linear-gradient(to left, white 50%, transparent 50%, transparent 75%);
       background-size: 200% 100%, 200% 100%;
-      background-position: left center, right center;
+      background-position: right, left;
+    }
+    100% {
+      background: linear-gradient(to right, white 50%, transparent 50%, transparent 75%),
+                  linear-gradient(to left, white 50%, transparent 50%, transparent 75%);
+      background-size: 100% 100%, 100% 100%;
+      background-position: center, center;
     }
   }
-*/
+  
+
+  

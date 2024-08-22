@@ -6,8 +6,8 @@ import Trivia from './Component/Trivia'
 function App() {  
   return (
     <>
-      <div className="App">     
-        <Trivia />
+      <div className="App">           
+        <Prueba />
       </div>
     </>
   )
