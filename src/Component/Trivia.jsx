@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import finImagen from "/assets/Fin.webp";
+import finImagen from "/assets/Maníconborde.png";
 import maniImagen from "/assets/Personaje.webp";
-import imgCorner from "/assets/Formaazul.png"
-import Inicio from "/assets/Manicompletoconbordeblanco.png"
+import imgCorner from "/assets/Formaazul.png";
+import Inicio from "/assets/Manicompletoconbordeblanco.png";
+import Logo from "/assets/Logo.png"
+import imgCornerWhite from "/assets/Formablanca.png"
 const Trivia = () => {
   const questions = [
     {
@@ -40,6 +42,7 @@ const Trivia = () => {
   const [feedback, setFeedback] = useState(null);
   const [showCongratulations, setShowCongratulations] = useState(false);
   const [isGameStart, setIsGameStart] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     if (selectedAnswer !== null) {
@@ -49,11 +52,11 @@ const Trivia = () => {
 
       const feedbackMessage = isAnswerCorrect
         ? "¡Correcto! Seguimos en carrera."
-        : "Upps, creo que va a tener que conocer más sobre el mundo del maní! Te esperamos en nuestro staff.";
+        : "Upps, creo que va a tener que conocer más sobre el mundo del maní! Te esperamos en nuestro stand.";
 
-      setFeedback({ message: feedbackMessage});
+      setFeedback({ message: feedbackMessage });
 
-      const feedbackDuration = isAnswerCorrect ? 3000 : 3000; // Ajusta el tiempo según sea necesario
+      const feedbackDuration = isAnswerCorrect ? 3000 : 3000;
 
       const timer = setTimeout(() => {
         if (isAnswerCorrect) {
@@ -69,22 +72,29 @@ const Trivia = () => {
           }
         } else {
           setFeedback(null);
-          setShowQuiz(false); // Volver a la pantalla de inicio
+          setShowQuiz(false);
         }
       }, feedbackDuration);
 
       if (showCongratulations) {
-        // Reiniciar automáticamente después de 10 segundos
         const autoRestartTimer = setTimeout(() => {
           handleRestartQuiz();
         }, 10000);
-  
+
         return () => clearTimeout(autoRestartTimer);
       }
 
       return () => clearTimeout(timer);
     }
   }, [selectedAnswer, currentQuestion, showCongratulations]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsExpanded(true);
+    }, 40000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleStartQuiz = () => {
     setShowQuiz(true);
@@ -113,22 +123,22 @@ const Trivia = () => {
   return (
     <div className="trivia-container">
       {!showCongratulations && !showQuiz ? (
-      <div className="start-container" onClick={handleStartQuiz}>
-      <div className="start-image-wrapper">
-        <img
-          src={Inicio}
-          alt="Desafío para MANÍaticos"
-          className="start-image"
-        />        
-      </div>      
-    </div>
+        <div className="start-container" onClick={handleStartQuiz}>
+          <div className="start-image-wrapper">
+            <img
+              src={Inicio}
+              alt="Desafío para MANÍaticos"
+              className="start-image"
+            />
+          </div>
+        </div>
       ) : (
         <>
           {showCongratulations ? (
             <div className="congrats-overlay">
               <div className="congrats-content">
                 <img
-                  src={finImagen}
+                  src={finImagen}            
                   alt="Felicitaciones"
                   className="congrats-image"
                 />
@@ -136,70 +146,70 @@ const Trivia = () => {
                 <div className="specialist-text">
                   Sos un especialista en maní como nosotros, y eso tiene un
                   premio
-                </div>                
-              </div>              
+                </div>
+                <img src={imgCornerWhite} alt="Imagen Izquierda" className="start-image-left-congrats" />
+                <img src={Logo} alt="Imagen Derecha" className="start-image-right-congrats" />
+              </div>
             </div>
-            
           ) : (
             <div className={`quiz-wrapper ${showQuiz ? "animate-quiz" : ""}`}>
               <div className="quiz-container">
-                <div className="border-top"></div>
-                <div className="border-right"></div>
-                <div className="border-bottom"></div>
-                <div className="border-left"></div>
-                <img
-                  src={imgCorner}
-                  className={`blue-corner ${
-                    feedback ? "feedback-visible" : ""
-                  } ${isGameStart ? "game-start" : ""}`}                  
-                />
-                  {feedback && (
-                    <span
-                      className={`feedback-text ${
-                        isCorrect ? "correct" : "incorrect"
-                      }`}
-                    >
-                      {feedback.message}
-                    </span>
-                  )}            
-                <div className="fill"></div>
-                <div className="quiz-content">
-                  <div className="question-info">
-                    <span>
-                      {currentQuestion + 1}.
-                    </span>
-                  </div>
-                  <div className="question-section">
-                    <p>{questions[currentQuestion].question}</p>
-                  </div>
-                  <div className="answers-section">
-                    {questions[currentQuestion].choices.map((choice, index) => (
-                      <div
-                        key={index}
-                        className={`answer-option ${
-                          isCorrect === false && selectedAnswer === index
-                            ? "incorrect"
-                            : ""
+                <div className="outer-border">
+                  <div
+                    className={`inner-border ${isExpanded ? "expanded" : ""}`}
+                  >
+                    <img
+                      src={imgCorner}
+                      className={`blue-corner ${
+                        feedback ? "feedback-visible" : ""
+                      } ${isGameStart ? "game-start" : ""}`}
+                    />
+                    {feedback && (
+                      <span
+                        className={`feedback-text ${
+                          isCorrect ? "correct" : "incorrect"
                         }`}
                       >
-                        <input
-                          type="checkbox"
-                          id={`answer-${index}`}
-                          checked={selectedAnswer === index}
-                          onChange={() => handleAnswerSelect(index)}
-                          disabled={isCorrect !== null}
-                        />
-                        <label htmlFor={`answer-${index}`}>{choice}</label>
+                        {feedback.message}
+                      </span>
+                    )}
+                    <div className="quiz-content">
+                      <div className="question-info">
+                        <span>{currentQuestion + 1}.</span>
                       </div>
-                    ))}
+                      <div className="question-section">
+                        <p>{questions[currentQuestion].question}</p>
+                      </div>
+                      <div className="answers-section">
+                        {questions[currentQuestion].choices.map(
+                          (choice, index) => (
+                            <div
+                              key={index}
+                              className={`answer-option ${
+                                isCorrect === false && selectedAnswer === index
+                                  ? "incorrect"
+                                  : ""
+                              }`}
+                            >
+                              <input
+                                type="checkbox"
+                                id={`answer-${index}`}
+                                checked={selectedAnswer === index}
+                                onChange={() => handleAnswerSelect(index)}
+                                disabled={isCorrect !== null}
+                              />
+                              <label htmlFor={`answer-${index}`}>
+                                {choice}
+                              </label>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <img src={maniImagen} alt="Maní" className="mani-image" />
               </div>
-              <img
-                src={maniImagen}
-                alt="Maní"
-                className="mani-image"
-              />
             </div>
           )}
         </>
