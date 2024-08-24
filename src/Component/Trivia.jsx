@@ -91,7 +91,7 @@ const Trivia = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsExpanded(true);
-    }, 40000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
