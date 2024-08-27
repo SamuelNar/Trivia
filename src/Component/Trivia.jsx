@@ -198,7 +198,7 @@ const Trivia = () => {
                                 onChange={() => handleAnswerSelect(index)}
                                 disabled={isCorrect !== null}
                               />
-                              <label htmlFor={`answer-${index}`}>
+                              <label htmlFor={`answer-${index}`}>                                
                                 {choice}
                               </label>
                             </div>
